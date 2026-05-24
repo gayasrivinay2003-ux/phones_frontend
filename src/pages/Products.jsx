@@ -10,7 +10,7 @@ const Products = () => {
 
   useEffect(() => {
 
-    fetch("http://localhost:3000/")
+    fetch("https://phones-3.onrender.com/")
       .then((response) => response.json())
       .then((data) => {
         setPhones(data);
