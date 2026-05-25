@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Products.css";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
 
@@ -7,6 +8,10 @@ const Products = () => {
   const [cart, setCart] = useState([]);
   const [search, setSearch] = useState("");
 
+  const navigate = useNavigate();
+
+  // Get Token
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
 
@@ -23,16 +28,54 @@ const Products = () => {
 
   // Add Cart
   function addToCart(phone) {
+
+    // Authentication Check
+    if (!token) {
+
+      alert("Please Login First");
+
+      navigate("/login");
+
+      return;
+    }
+
     setCart([...cart, phone]);
   }
 
   // Remove Cart
   function removeFromCart(phone) {
+
     const updatedCart = cart.filter(
       (item) => item !== phone
     );
 
     setCart(updatedCart);
+  }
+
+  // Buy Now
+  function buyNow(phone) {
+
+    // Authentication Check
+    if (!token) {
+
+      alert("Please Login First");
+
+      navigate("/login");
+
+      return;
+    }
+
+    alert(`Order placed for ${phone.phone_name}`);
+  }
+
+  // Logout
+  function logout() {
+
+    localStorage.removeItem("token");
+
+    alert("Logout Success");
+
+    navigate("/login");
   }
 
   // Total Price
@@ -43,13 +86,13 @@ const Products = () => {
 
   // Search Filter
   const filteredPhones = phones.filter(
-  (phone) =>
-    phone &&
-    phone.phone_name &&
-    phone.phone_name
-      .toLowerCase()
-      .includes(search.toLowerCase())
-);
+    (phone) =>
+      phone &&
+      phone.phone_name &&
+      phone.phone_name
+        .toLowerCase()
+        .includes(search.toLowerCase())
+  );
 
   return (
     <div>
@@ -63,11 +106,33 @@ const Products = () => {
           type="text"
           placeholder="Search Mobile..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
           className="search-input"
         />
 
         <h2>🛒 Cart : {cart.length}</h2>
+
+        {
+          token ? (
+            <button
+              onClick={logout}
+              className="logout-btn"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={() =>
+                navigate("/login")
+              }
+              className="login-btn"
+            >
+              Login
+            </button>
+          )
+        }
 
       </div>
 
@@ -81,9 +146,11 @@ const Products = () => {
 
         {filteredPhones.map((phone, index) => {
 
-          const added = cart.includes(phone);
+          const added =
+            cart.includes(phone);
 
           return (
+
             <div
               key={index}
               className="product-card"
@@ -125,6 +192,7 @@ const Products = () => {
 
               {
                 added ? (
+
                   <div>
 
                     <button className="added-btn">
@@ -141,7 +209,9 @@ const Products = () => {
                     </button>
 
                   </div>
+
                 ) : (
+
                   <div>
 
                     <button
@@ -153,15 +223,22 @@ const Products = () => {
                       🛒 Add To Cart
                     </button>
 
-                    <button className="buy-btn">
+                    <button
+                      className="buy-btn"
+                      onClick={() =>
+                        buyNow(phone)
+                      }
+                    >
                       ⚡ Buy Now
                     </button>
 
                   </div>
+
                 )
               }
 
             </div>
+
           );
         })}
 
