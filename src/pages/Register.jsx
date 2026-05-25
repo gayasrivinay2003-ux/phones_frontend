@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 const Register = () => {
 
@@ -72,51 +73,42 @@ const Register = () => {
   }
 
   return (
-    <div>
+    <div className="register-page">
+      <div className="register-card">
 
-      <h1>Register</h1>
+        <h1 className="register-title">Register</h1>
 
-      <form onSubmit={handleRegister}>
+        <form className="register-form" onSubmit={handleRegister}>
 
-        <input
-          type="text"
-          placeholder="Enter Name"
-          value={name}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
-        />
+          <input
+            className="register-input"
+            type="text"
+            placeholder="Enter Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-        <br /><br />
+          <input
+            className="register-input"
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
+          <input
+            className="register-input"
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <br /><br />
+          <button className="register-btn" type="submit">Register</button>
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
+        </form>
 
-        <br /><br />
-
-        <button type="submit">
-          Register
-        </button>
-
-      </form>
-
+      </div>
     </div>
   );
 };

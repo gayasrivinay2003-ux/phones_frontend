@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
 
@@ -59,40 +60,34 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="login-page">
+      <div className="login-card">
 
-      <h1>Login</h1>
+        <h1 className="login-title">Login</h1>
 
-      <form onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleLogin}>
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-        />
+          <input
+            className="login-input"
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <br /><br />
+          <input
+            className="login-input"
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-        />
+          <button className="login-btn" type="submit">Login</button>
 
-        <br /><br />
+        </form>
 
-        <button type="submit">
-          Login
-        </button>
-
-      </form>
-
+      </div>
     </div>
   );
 };
