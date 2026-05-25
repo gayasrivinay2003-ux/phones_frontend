@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App = () => {
 
@@ -95,11 +96,6 @@ const App = () => {
         />
 
         <Route
-          path="/products"
-          element={<Products />}
-        />
-
-        <Route
           path="/login"
           element={<Login />}
         />
@@ -107,6 +103,21 @@ const App = () => {
         <Route
           path="/register"
           element={<Register />}
+        />
+
+        {/* Protected Route */}
+
+        <Route
+          path="/products"
+          element={
+
+            <ProtectedRoute>
+
+              <Products />
+
+            </ProtectedRoute>
+
+          }
         />
 
       </Routes>
