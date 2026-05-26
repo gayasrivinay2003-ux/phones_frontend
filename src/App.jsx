@@ -7,15 +7,23 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/Home";
+
 import About from "./pages/About";
+
 import Products from "./pages/Products";
+
 import Login from "./pages/Login";
+
 import Register from "./pages/Register";
+
+import Profile from "./pages/Profile";
+
 import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App = () => {
 
   return (
+
     <div>
 
       {/* Navbar */}
@@ -79,6 +87,16 @@ const App = () => {
           Register
         </Link>
 
+        <Link
+          to="/profile"
+          style={{
+            color: "white",
+            textDecoration: "none"
+          }}
+        >
+          Profile
+        </Link>
+
       </nav>
 
       {/* Routes */}
@@ -105,7 +123,7 @@ const App = () => {
           element={<Register />}
         />
 
-        {/* Protected Route */}
+        {/* Protected Products Route */}
 
         <Route
           path="/products"
@@ -118,6 +136,13 @@ const App = () => {
             </ProtectedRoute>
 
           }
+        />
+
+        {/* Profile Route */}
+
+        <Route
+          path="/profile"
+          element={<Profile />}
         />
 
       </Routes>

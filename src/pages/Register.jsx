@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+
 import "./Register.css";
 
 const Register = () => {
@@ -14,11 +15,38 @@ const Register = () => {
   const [password, setPassword] =
     useState("");
 
+  const [profile, setProfile] =
+    useState(null);
+
   const navigate = useNavigate();
 
   function handleRegister(e) {
 
     e.preventDefault();
+
+    // FormData
+    const formData =
+      new FormData();
+
+    formData.append(
+      "name",
+      name
+    );
+
+    formData.append(
+      "email",
+      email
+    );
+
+    formData.append(
+      "password",
+      password
+    );
+
+    formData.append(
+      "profile",
+      profile
+    );
 
     fetch(
       "https://phones-3.onrender.com/register",
@@ -26,18 +54,7 @@ const Register = () => {
 
         method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json",
-        },
-
-        body: JSON.stringify({
-
-          name,
-          email,
-          password,
-
-        }),
+        body: formData,
 
       }
     )
@@ -57,7 +74,15 @@ const Register = () => {
           "User registered successfully"
         ) {
 
-          navigate("/login");
+          localStorage.setItem(
+
+            "user",
+
+            JSON.stringify(data.user)
+
+          );
+
+          navigate("/profile");
 
         }
 
@@ -73,19 +98,28 @@ const Register = () => {
   }
 
   return (
+
     <div className="register-page">
+
       <div className="register-card">
 
-        <h1 className="register-title">Register</h1>
+        <h1 className="register-title">
+          Register
+        </h1>
 
-        <form className="register-form" onSubmit={handleRegister}>
+        <form
+          className="register-form"
+          onSubmit={handleRegister}
+        >
 
           <input
             className="register-input"
             type="text"
             placeholder="Enter Name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
           />
 
           <input
@@ -93,7 +127,9 @@ const Register = () => {
             type="email"
             placeholder="Enter Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
           />
 
           <input
@@ -101,14 +137,34 @@ const Register = () => {
             type="password"
             placeholder="Enter Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
           />
 
-          <button className="register-btn" type="submit">Register</button>
+          {/* IMAGE INPUT */}
+          <input
+            type="file"
+            onChange={(e) =>
+              setProfile(
+                e.target.files[0]
+              )
+            }
+          />
+
+          <button
+            className="register-btn"
+            type="submit"
+          >
+
+            Register
+
+          </button>
 
         </form>
 
       </div>
+
     </div>
   );
 };
